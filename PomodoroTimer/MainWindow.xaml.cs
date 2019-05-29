@@ -25,8 +25,8 @@ namespace PomodoroTimer
 
         
         private DispatcherTimer timer = new DispatcherTimer();
-        int minutes = 0;
-        int seconds = 5;
+        int minutes = 24;
+        int seconds = 60;
         Boolean isRunning = true;
         SoundPlayer player = new SoundPlayer(PomodoroTimer.Properties.Resources.polepole);
 
