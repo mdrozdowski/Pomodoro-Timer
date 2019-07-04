@@ -26,7 +26,8 @@ namespace PomodoroTimer
         
         private DispatcherTimer timer = new DispatcherTimer();
         int minutes = 25;
-        int seconds = 60;
+        int seconds = 0;
+        int startMinutes = 25;        
         Boolean isRunning = false;
         
         SoundPlayer player = new SoundPlayer(Properties.Resources.polepole);
@@ -45,7 +46,12 @@ namespace PomodoroTimer
                 {
                     tbTimer.Text = "Time is up!";
                     PlayAlarmSong();
+                    btnUpMinute.Visibility = Visibility.Hidden;
+                    btnDownMinute.Visibility = Visibility.Hidden;
+
                     isRunning = false;
+
+
                 }
                 else if (minutes < 10 && seconds < 10)
                     tbTimer.Text = "0" + minutes + ":0" + seconds;
@@ -72,13 +78,14 @@ namespace PomodoroTimer
 
             timer.Tick += Timer_Tick;
             timer.Start();
-            minutes--;
+            
             InitializeComponent();
         }
 
 
         private void StartStopTimer(object sender, RoutedEventArgs e)
         {
+           
             
             if (!isRunning)
             {
@@ -112,17 +119,19 @@ namespace PomodoroTimer
 
         private void ResetTimer(object sender, RoutedEventArgs e)
         {
-           
 
+            minutes = startMinutes;
             isRunning = false;
             //minutes = 25;
-            seconds = 60;
+            seconds = 0;
+            
             
             btnStartStop.Content = "Start";
             player.Stop();
-            
-            
-                tbTimer.Text = minutes.ToString() + ":00";
+
+            btnUpMinute.Visibility = Visibility.Visible;
+            btnDownMinute.Visibility = Visibility.Visible;
+            tbTimer.Text = minutes.ToString() + ":00";
             
           
 
@@ -133,10 +142,15 @@ namespace PomodoroTimer
            
 
             isRunning = false;
-            minutes++;          
+            minutes++;
+            startMinutes++;
             seconds = 0;
             btnStartStop.Content = "Start";
-            tbTimer.Text = minutes.ToString() + ":00";
+
+            if(minutes<10)
+                tbTimer.Text = "0"+minutes.ToString() + ":00";
+            else
+                tbTimer.Text = minutes.ToString() + ":00";
         }
 
         private void BtnDownMinute_Click(object sender, RoutedEventArgs e)
@@ -144,10 +158,16 @@ namespace PomodoroTimer
             isRunning = false;
             seconds = 0;
             btnStartStop.Content = "Start";
-            tbTimer.Text = minutes.ToString() + ":00";
+            
+            if(minutes<10)
+                tbTimer.Text = "0" + minutes.ToString() + ":00";
+            else
+                tbTimer.Text = minutes.ToString() + ":00";
+
             if (minutes > 1)
             {
                 minutes--;
+                startMinutes--;
                 seconds = 60;
             }
             
