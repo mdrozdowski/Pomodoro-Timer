@@ -25,10 +25,11 @@ namespace PomodoroTimer
 
         
         private DispatcherTimer timer = new DispatcherTimer();
-        int minutes = 24;
+        int minutes = 25;
         int seconds = 60;
-        Boolean isRunning = true;
-        SoundPlayer player = new SoundPlayer(PomodoroTimer.Properties.Resources.polepole);
+        Boolean isRunning = false;
+        
+        SoundPlayer player = new SoundPlayer(Properties.Resources.polepole);
 
         void Timer_Tick(object sender, EventArgs e)
         {
@@ -67,53 +68,91 @@ namespace PomodoroTimer
 
         public MainWindow()
         {
+            timer.Interval = TimeSpan.FromSeconds(1);
+
+            timer.Tick += Timer_Tick;
+            timer.Start();
+            minutes--;
             InitializeComponent();
         }
 
 
-        private void StartTimer(object sender, EventArgs e)
+        private void StartStopTimer(object sender, RoutedEventArgs e)
         {
-            if (isRunning)
+            
+            if (!isRunning)
             {
-                timer.Interval = TimeSpan.FromSeconds(1);
-
-                timer.Tick += Timer_Tick;
-                timer.Start();
+                
+                isRunning = true;
+                btnStartStop.Content = "Stop";
             }
-            isRunning = true;
-        }
-
-
-
-
-        private void StopTimer(object sender, RoutedEventArgs e)
-        {
-            isRunning = false;
-           int _minutes = minutes;
-           int _seconds = seconds;
-            if (minutes < 0)
-            ResetTimer(sender, e);
-
-            else if (_minutes < 10 && _seconds < 10)
-                tbTimer.Text = "0" + _minutes + ":0" + _seconds;
-            else if (_minutes < 10)
-                tbTimer.Text = "0" + _minutes + ":" + _seconds;
-            else if (_seconds < 10)
-                tbTimer.Text = _minutes + ":0" + _seconds;
-
             else
-                tbTimer.Text = _minutes + ":" + _seconds;
-            player.Stop();
+            {
+                
+                int _minutes = minutes;
+                int _seconds = seconds;
+                if (minutes < 0)
+                    ResetTimer(sender, e);
+
+                else if (_minutes < 10 && _seconds < 10)
+                    tbTimer.Text = "0" + _minutes + ":0" + _seconds;
+                else if (_minutes < 10)
+                    tbTimer.Text = "0" + _minutes + ":" + _seconds;
+                else if (_seconds < 10)
+                    tbTimer.Text = _minutes + ":0" + _seconds;
+
+                else
+                    tbTimer.Text = _minutes + ":" + _seconds;
+                player.Stop();
+                isRunning = false;
+                btnStartStop.Content = "Start";
+            }
         }
+
 
         private void ResetTimer(object sender, RoutedEventArgs e)
         {
+           
+
             isRunning = false;
-            minutes = 24;
+            //minutes = 25;
             seconds = 60;
-            tbTimer.Text = "25:00";
+            
+            btnStartStop.Content = "Start";
             player.Stop();
+            
+            
+                tbTimer.Text = minutes.ToString() + ":00";
+            
+          
 
         }
+
+        private void BtnUpMinute_Click(object sender, RoutedEventArgs e)
+        {
+           
+
+            isRunning = false;
+            minutes++;          
+            seconds = 0;
+            btnStartStop.Content = "Start";
+            tbTimer.Text = minutes.ToString() + ":00";
+        }
+
+        private void BtnDownMinute_Click(object sender, RoutedEventArgs e)
+        {
+            isRunning = false;
+            seconds = 0;
+            btnStartStop.Content = "Start";
+            tbTimer.Text = minutes.ToString() + ":00";
+            if (minutes > 1)
+            {
+                minutes--;
+                seconds = 60;
+            }
+            
+        }
+
+       
     }
 }

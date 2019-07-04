@@ -5,23 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PomodoroTimer"
         mc:Ignorable="d"
-        Title="PomodoroTimer" Height="300" Width="600" Background="#FFABC1D4">
+        Title="Pomodoro Timer" Height="200" Width="500" Background="#FFABC1D4">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            
+           
         </Grid.RowDefinitions>
+        
+        
+        
         <TextBlock x:Name="tbTimer" Grid.ColumnSpan="4" Margin="30,0" Text="25:00" FontSize="72" TextAlignment="Center" FontWeight="Bold" />
-        <Button x:Name="btnStart" Grid.Column="1" Grid.Row="1" Margin="10" Content="Start" FontSize="16" Background="#FFD6BFA3" Click="StartTimer" />
-        <Button x:Name="btnStop" Grid.Column="2" Grid.Row="1" Margin="10" Background="#FFD6BFA3" Content="Stop" FontSize="16" Click="StopTimer"/>
-        <Button x:Name="btnReset" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="50,10" Background="#FFD6BFA3" Content="Reset Timer" FontSize="16" Click="ResetTimer"/>
+        <Button x:Name="btnStartStop" Grid.Column="1" Grid.Row="1" Margin="10" Content="Start" FontSize="16" Background="#FFD6BFA3" Click="StartStopTimer" />
+        
+        <Button x:Name="btnReset" Grid.Column="2"  Grid.Row="1" Margin="10" Background="#FFD6BFA3" Content="Reset" FontSize="16" Click="ResetTimer"/>
+        <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left">
+            <Button x:Name="btnUpMinute"  Click="BtnUpMinute_Click" Height="25" Width="25" Margin="0, 15, 0, 10" FontFamily="Marlett" Content="5" />
+            <Button x:Name="btnDownMinute"  Click="BtnDownMinute_Click" Height="25" Width="25" Margin="0, 0, 0, 0" FontFamily="Marlett" Content="6" />
+        </StackPanel>
 
     </Grid>
 </Window>
